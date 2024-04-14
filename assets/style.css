@@ -86,9 +86,11 @@ menu {
     margin-top: 20px;
 }
 
-.searchInput {
+.search_input {
   width: 1000px; 
   height: 75px;
+  font-size: 55px;
+  font-family: Poppins;
 }
 
 .buttonContainer {
@@ -193,7 +195,7 @@ menu {
     word-wrap: break-word;
 }
 
-.searchButton {
+.search_button {
   color: antiquewhite;
   background-color: #24343D;
   font-family: Poppins;

@@ -1,34 +1,46 @@
-// use Openweathermap.org - use 5 day weather forecast
-// weather dashboard that will run in the browswer, dynamically HTML + CSS
-// API key (done)
-// Use localstorage to store any persistent data
-// current weather
-// 5 day weather
-// search + adds your searches to the search history button (up to ?)
-
-var searchInputEl = document.querySelector('.searchInput');
-
-//var x = document.getElementById("myText").value;
-
-const apiKey = `1fdef56e946e4c8e8868a0c1341b24c4`;
+// global var + const
+var searchInputEl = document.querySelector('.search_input');
 var cityName = `New York`
 
-let searchBtn = document.querySelector('.searchButton');
-searchBtn.addEventListener("click", function() {
-    cityName = searchInputEl.value;
-    const geoApi = `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=5&appid=${apiKey}`
-    const 
+// API key from openweather api
+const apiKey = `115fc92bba0f7fa87ae27558e41df27f`;
 
+//example - var x = document.getElementById("myText").value;
+
+// event listener for the search button
+let searchBtn = document.querySelector('.search_button');
+searchBtn.addEventListener("click", function() {
+    // verify search button click
+    console.log("search has been clicked");
+    let cityName = searchInputEl.value;
+    const geoApi = `https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=5&appid=${apiKey}`;         
+
+    // fetch data from the Geo API
     fetch(geoApi)
         .then(function(response) {
             return response.json();
-        })
-        .then(function(data){
-            //lat
-            //lon
+        })     
+        .then(function(data) {
+            
             console.log(data);
+            
+            // loop through each object in array
+            for (var i = 0; i < data.length; i++) {
+                var lat = data[i].lat;
+                var lon = data[i].lon;
+
+            // logging the latitude and longitude to the console
+            console.log('Weather Latitude:', lat);
+            console.log('Weather Longitude:', lon);
+            }
         })
+            .catch(function(error) {
+                console.log("There was an error when getting weather data:", error);
+            }
+        );
 });
+
+//const fiveDayApi = `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`;
 
 //element.addEventListener("click", function(){ alert("Hello World!"); });
 
