@@ -25,14 +25,16 @@ searchBtn.addEventListener("click", function() {
             console.log(data);
             
             // loop through each object in array
-            for (var i = 0; i < data.length; i++) {
-                var lat = data[i].lat;
-                var lon = data[i].lon;
+            // for (var i = 0; i < data.length; i++) {
+                var lat = data[0].lat;
+                var lon = data[0].lon;
 
             // logging the latitude and longitude to the console
             console.log('Weather Latitude:', lat);
             console.log('Weather Longitude:', lon);
-            }
+            getFiveDayWeather(lat, lon);
+            currentWeather(lat, lon);
+            // }
         })
             .catch(function(error) {
                 console.log("There was an error when getting weather data:", error);
@@ -40,23 +42,35 @@ searchBtn.addEventListener("click", function() {
         );
 });
 
-//const fiveDayApi = `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`;
+function getFiveDayWeather(lat, lon) {
+
+const fiveDayApi = `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}&units=imperial`;
+fetch(fiveDayApi)
+    .then(function(response) {
+        return response.json();
+    })
+    .then(function(data) {  
+        console.log(data);
+});
+}
+
 
 //element.addEventListener("click", function(){ alert("Hello World!"); });
 
 // openweather api url
-// const weatherData = `http://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}`
+function currentWeather(lat, lon) {
+const weatherData = `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=imperial`
 
-// console.log(weatherData);
+console.log(weatherData);
 
-// fetch(weatherData)
-//     .then(function(response) {
-//         return response.json();
-//     })
-//     .then(function(data) {
-//         console.log(data);
-// });
-
+fetch(weatherData)
+    .then(function(response) {
+        return response.json();
+    })
+    .then(function(data) {
+        console.log(data);
+});
+}
 // console.log(weatherData);
 
 //api.openweathermap.org/data/2.5/weather?q={city}&appid={APIkey};
