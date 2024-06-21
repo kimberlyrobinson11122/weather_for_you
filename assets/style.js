@@ -89,7 +89,7 @@ function updateFiveDayForecast(data) {
                 <div>Temp: ${temp}°F</div>
                 <div>Wind Speed: ${windSpeed} m/s</div>
                 <div>Humidity: ${humidity}%</div>
-                <div>Type: ${weatherType}</div>
+                <div>Conditions: ${weatherType}</div>
             </div>
         `;
         
