@@ -49,6 +49,17 @@ menu {
     line-height: 65px; 
 }
 
+
+.title-banner {
+  width: 100%;
+  text-align: left;
+  color: white; 
+  font-size: 40px; 
+  font-family: Poppins; 
+  font-weight: 500; 
+  line-height: 65px; 
+}
+
 .dark-banner {
     width: 100%;
     text-align: center;
