@@ -4,7 +4,7 @@
 
 ## Deployed Application
 
-Deployed link: https://github.com/kimberlyrobinson11122/Kimberly-Robinson-Portfolio/deployments
+Deployed link: (https://kimberlyrobinson11122.github.io/weather_for_you/)
 
 GitHub Repo: (https://github.com/kimberlyrobinson11122/weather_for_you)
 
@@ -96,12 +96,6 @@ If you have any questions or encounter any issues, please don't hesitate to cont
 
 Email: me@me.com
 
-## Acceptance Criteria
-**Optional section** - this is an extra layer for those who have working list of criteria to be met, this section is a working section and is to be deleted when you deploy your first build. ==(Must edit this section)==
-
-- [ ] Incomplete item  (use this to create a checklist - [ ])
-- [x] Complete item (use this to mark items complete on your checklist- [x])
-
 ## Credits
 The project was started from scratch and developed iteratively or with starter code. ==(Must edit this section)==
 
@@ -115,7 +109,7 @@ Appreciation to the incredible Instructor, TAs, Tutors at EdX Berkeley.
 This initial build is complete and was built to project specification.
 
 ## Extra comments for sustainability team
-Your extra comments here.
+Ready for sustainability team. 
 
 ## Future Features
-Future features commented here.
+Add other features as part of the next release. 
