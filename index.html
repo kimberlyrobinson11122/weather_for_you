@@ -11,60 +11,46 @@
     <title>Weather For You</title>
 </head>
 
-
 <body>
     <!--Nav-->
     <menu>
         <div class="title">Weather Wizard</div>
         <div style="color: white; font-size: 25px; font-family: Poppins; font-weight: 500; word-wrap: break-word">Home</div>
-        <div class="frame">Frame 1</div>
-        <div class="frame">Frame 2</div>
-        <div class="frame">Frame 3</div>
     </menu>
 
     <section class="banner">
-        <div class="light-banner">Seeing the weather of the whole world with </span><span class="dark-banner">Weather Wizard!</span></div>
+        <div class="light-banner">Search your weather with <span class="dark-banner">Weather Wizard!</span></div>
     </section>
 
     <div class="search">
-        <input class="search_input" type="text" placehoder="Enter a city to search here">
+        <input class="search_input" type="text" placeholder="Enter a city to search here">
         <button class="search_button">Search</button>
     </div>
 
     <div class="searchHistory">
         <h1>Search History</h1>
-    
         <div class="buttonContainer flexParentEl">
-            <div clas="buttonColumn">
-                <button class="longButton">Button 1</button>
-                <button class="longButton">Button 2</button>
-                <button class="longButton">Button 3</button>
-                <button class="longButton">Button 4</button>
+            <div class="buttonColumn">
                 <button class="longButton">Button 1</button>
                 <button class="longButton">Button 2</button>
                 <button class="longButton">Button 3</button>
                 <button class="longButton">Button 4</button>
             </div>
-        
 
-        <div class="forecastDetails box flexChildEl">
-            Current Forecast
-            <h2>City</h2> 
-            <div>Temp</div>
-            <div>Wind Speed</div>
-            <div>Humidity</div>
-            <div>Type</div>
+            <div class="forecastDetails box flexChildEl">
+                Current Forecast
+                <h2 id="city-name">City</h2>
+                <img id="weather-type">
+                <div id="temp">Temp</div>
+                <div id="wind-speed">Wind Speed</div>
+                <div id="humidity">Humidity</div>
+            </div>
         </div>
-
-        </div>
-
     </div>
-
-    <div></div>
 
     <div class="container">   
         <div class="column">
-            <div class="forecastDetails box">
+            <div class="forecastDetails box fiveDayCard">
                 <h2>City</h2> 
                 <div>Temp</div>
                 <div>Wind Speed</div>
@@ -74,18 +60,7 @@
         </div>
         
         <div class="column">
-            <div class="forecastDetails box">
-                <h2>City</h2> 
-                <div>Temp</div>
-                <div>Wind Speed</div>
-                <div>Humidity</div>
-                <div>Type</div>
-            </div>
-        </div>
-
-        
-        <div class="column">
-            <div class="forecastDetails box">
+            <div class="forecastDetails box fiveDayCard">
                 <h2>City</h2> 
                 <div>Temp</div>
                 <div>Wind Speed</div>
@@ -95,7 +70,17 @@
         </div>
 
         <div class="column">
-            <div class="forecastDetails box">
+            <div class="forecastDetails box fiveDayCard">
+                <h2>City</h2> 
+                <div>Temp</div>
+                <div>Wind Speed</div>
+                <div>Humidity</div>
+                <div>Type</div>
+            </div>
+        </div>
+
+        <div class="column">
+            <div class="forecastDetails box fiveDayCard">
                 <h2>City</h2>  
                 <div>Temp</div>
                 <div>Wind Speed</div>
@@ -105,7 +90,7 @@
         </div>
 
         <div class="column">
-            <div class="forecastDetails box">
+            <div class="forecastDetails box fiveDayCard">
                 <h2>City</h2>  
                 <div>Temp</div>
                 <div>Wind Speed</div>
@@ -115,10 +100,6 @@
         </div>
     </div>
 
-
-
-    <script src= "./assets/style.js"></script>
-
+    <script src="./assets/style.js"></script>
 </body>
-
 </html>
