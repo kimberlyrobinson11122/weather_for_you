@@ -1,9 +1,14 @@
 // Global variables
 var searchInputEl = document.querySelector('.search_input');
-var searchHistory = [];
+var searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
 
 // API key from openweather api
 const apiKey = '115fc92bba0f7fa87ae27558e41df27f';
+
+// Load search history on page load
+document.addEventListener("DOMContentLoaded", function() {
+    updateSearchHistory();
+});
 
 // Event listener for the search button
 let searchBtn = document.querySelector('.search_button');
@@ -11,54 +16,22 @@ searchBtn.addEventListener("click", function() {
     let cityName = searchInputEl.value;
     if (cityName && !searchHistory.includes(cityName)) {
         searchHistory.push(cityName);
+        localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
         updateSearchHistory();
     }
-
-    const geoApi = `https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=5&appid=${apiKey}`;
-
-    fetch(geoApi)
-        .then(response => response.json())
-        .then(data => {
-            if (data.length > 0) {
-                var lat = data[0].lat;
-                var lon = data[0].lon;
-                getFiveDayWeather(lat, lon);
-                currentWeather(lat, lon);
-            } else {
-                console.log('No data found for the specified city.');
-            }
-        })
-        .catch(error => {
-            console.log("There was an error when getting weather data:", error);
-        });
+    searchCity(cityName);
 });
 
 // Event listener for the search button using the enter key
 document.querySelector('.search_input').addEventListener('keypress', function (e) {
     if (e.key === 'Enter') {
-    let cityName = searchInputEl.value;
-    if (cityName && !searchHistory.includes(cityName)) {
-        searchHistory.push(cityName);
-        updateSearchHistory();
-    }
-
-    const geoApi = `https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=5&appid=${apiKey}`;
-
-    fetch(geoApi)
-        .then(response => response.json())
-        .then(data => {
-            if (data.length > 0) {
-                var lat = data[0].lat;
-                var lon = data[0].lon;
-                getFiveDayWeather(lat, lon);
-                currentWeather(lat, lon);
-            } else {
-                console.log('No data found for the specified city.');
-            }
-        })
-        .catch(error => {
-            console.log("There was an error when getting weather data:", error);
-        });
+        let cityName = searchInputEl.value;
+        if (cityName && !searchHistory.includes(cityName)) {
+            searchHistory.push(cityName);
+            localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
+            updateSearchHistory();
+        }
+        searchCity(cityName);
     }
 });
 
