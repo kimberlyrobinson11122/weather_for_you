@@ -5,9 +5,13 @@ var searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
 // API key from openweather api
 const apiKey = '115fc92bba0f7fa87ae27558e41df27f';
 
-// Load search history on page load
+// Load search history and last searched city on page load
 document.addEventListener("DOMContentLoaded", function() {
     updateSearchHistory();
+    let lastCity = localStorage.getItem('lastCity');
+    if (lastCity) {
+        searchCity(lastCity);
+    }
 });
 
 // Event listener for the search button
@@ -17,6 +21,7 @@ searchBtn.addEventListener("click", function() {
     if (cityName && !searchHistory.includes(cityName)) {
         searchHistory.push(cityName);
         localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
+        localStorage.setItem('lastCity', cityName);
         updateSearchHistory();
     }
     searchCity(cityName);
@@ -29,6 +34,7 @@ document.querySelector('.search_input').addEventListener('keypress', function (e
         if (cityName && !searchHistory.includes(cityName)) {
             searchHistory.push(cityName);
             localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
+            localStorage.setItem('lastCity', cityName);
             updateSearchHistory();
         }
         searchCity(cityName);
