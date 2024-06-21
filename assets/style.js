@@ -1,93 +1,154 @@
-// global var + const
+// Global variables
 var searchInputEl = document.querySelector('.search_input');
-var cityName = `New York`
+var searchHistory = [];
 
 // API key from openweather api
-const apiKey = `115fc92bba0f7fa87ae27558e41df27f`;
+const apiKey = '115fc92bba0f7fa87ae27558e41df27f';
 
-//example - var x = document.getElementById("myText").value;
-
-// event listener for the search button
+// Event listener for the search button
 let searchBtn = document.querySelector('.search_button');
 searchBtn.addEventListener("click", function() {
-    // verify search button click
-    console.log("search has been clicked");
     let cityName = searchInputEl.value;
-    const geoApi = `https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=5&appid=${apiKey}`;         
+    if (cityName && !searchHistory.includes(cityName)) {
+        searchHistory.push(cityName);
+        updateSearchHistory();
+    }
 
-    // fetch data from the Geo API
+    const geoApi = `https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=5&appid=${apiKey}`;
+
     fetch(geoApi)
-        .then(function(response) {
-            return response.json();
-        })     
-        .then(function(data) {
-            
-            console.log(data);
-            
-            // loop through each object in array
-            // for (var i = 0; i < data.length; i++) {
+        .then(response => response.json())
+        .then(data => {
+            if (data.length > 0) {
                 var lat = data[0].lat;
                 var lon = data[0].lon;
-
-            // logging the latitude and longitude to the console
-            console.log('Weather Latitude:', lat);
-            console.log('Weather Longitude:', lon);
-            getFiveDayWeather(lat, lon);
-            currentWeather(lat, lon);
-            // }
-        })
-            .catch(function(error) {
-                console.log("There was an error when getting weather data:", error);
+                getFiveDayWeather(lat, lon);
+                currentWeather(lat, lon);
+            } else {
+                console.log('No data found for the specified city.');
             }
-        );
+        })
+        .catch(error => {
+            console.log("There was an error when getting weather data:", error);
+        });
+});
+
+// Event listener for the search button using the enter key
+document.querySelector('.search_input').addEventListener('keypress', function (e) {
+    if (e.key === 'Enter') {
+    let cityName = searchInputEl.value;
+    if (cityName && !searchHistory.includes(cityName)) {
+        searchHistory.push(cityName);
+        updateSearchHistory();
+    }
+
+    const geoApi = `https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=5&appid=${apiKey}`;
+
+    fetch(geoApi)
+        .then(response => response.json())
+        .then(data => {
+            if (data.length > 0) {
+                var lat = data[0].lat;
+                var lon = data[0].lon;
+                getFiveDayWeather(lat, lon);
+                currentWeather(lat, lon);
+            } else {
+                console.log('No data found for the specified city.');
+            }
+        })
+        .catch(error => {
+            console.log("There was an error when getting weather data:", error);
+        });
+    }
 });
 
 function getFiveDayWeather(lat, lon) {
-
-const fiveDayApi = `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}&units=imperial`;
-fetch(fiveDayApi)
-    .then(function(response) {
-        return response.json();
-    })
-    .then(function(data) {  
-        console.log(data);
-});
+    const fiveDayApi = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}&units=imperial`;
+    fetch(fiveDayApi)
+        .then(response => response.json())
+        .then(data => {
+            updateFiveDayForecast(data);
+        });
 }
 
-
-//element.addEventListener("click", function(){ alert("Hello World!"); });
-
-// openweather api url
 function currentWeather(lat, lon) {
-const weatherData = `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=imperial`
+    const weatherData = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=imperial`;
 
-console.log(weatherData);
-
-fetch(weatherData)
-    .then(function(response) {
-        return response.json();
-    })
-    .then(function(data) {
-        console.log(data);
-});
+    fetch(weatherData)
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('city-name').textContent = data.name;
+            document.getElementById('temp').textContent = `Temperature: ${data.main.temp}°F`;
+            document.getElementById('wind-speed').textContent = `Wind Speed: ${data.wind.speed} m/s`;
+            document.getElementById('humidity').textContent = `Humidity: ${data.main.humidity}%`;
+            document.getElementById('weather-type').setAttribute("src", `https://openweathermap.org/img/wn/${data.weather[0].icon}.png`);
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+        });
 }
-// console.log(weatherData);
 
-//api.openweathermap.org/data/2.5/weather?q={city}&appid={APIkey};
+function updateFiveDayForecast(data) {
+    const forecastContainer = document.querySelector('.container');
+    forecastContainer.innerHTML = ''; // Clear previous forecast
 
-// const queryURL = `http://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}`;
+    for (let i = 0; i < data.list.length; i += 8) { // We use a step of 8 to get daily data (24 hours / 3 hours = 8 intervals)
+        const forecast = data.list[i];
+        const date = new Date(forecast.dt * 1000).toLocaleDateString();
+        const temp = forecast.main.temp;
+        const windSpeed = forecast.wind.speed;
+        const humidity = forecast.main.humidity;
+        const weatherType = forecast.weather[0].description;
+        
+        const forecastBox = document.createElement('div');
+        forecastBox.classList.add('column');
+        
+        forecastBox.innerHTML = `
+            <div class="forecastDetails box fiveDayCard">
+                <h2>${date}</h2>
+                <img src="https://openweathermap.org/img/wn/${forecast.weather[0].icon}.png">
+                <div>Temp: ${temp}°F</div>
+                <div>Wind Speed: ${windSpeed} m/s</div>
+                <div>Humidity: ${humidity}%</div>
+                <div>Type: ${weatherType}</div>
+            </div>
+        `;
+        
+        forecastContainer.appendChild(forecastBox);
+    }
+}
 
-// fetch(queryURL)
-//     .then(function(response) {
-//         return response.json();
-//     })
-//     .then(function(data) {
-//         console.log(data);
-//     });
+function updateSearchHistory() {
+    const buttonColumn = document.querySelector('.buttonColumn');
+    buttonColumn.innerHTML = ''; // Clear previous buttons
 
-// console.log(queryURL);
+    searchHistory.forEach((city) => {
+        const button = document.createElement('button');
+        button.classList.add('longButton');
+        button.textContent = city;
+        button.addEventListener('click', function() {
+            searchCity(city);
+        });
+        buttonColumn.appendChild(button);
+    });
+}
 
-// coord: {lon: xxx.xxx lat: xxx.xxx}
-// main: {temp: 294.14, feels like: xxx, temp_min: xxx, temp_max: xxx.xx, pressure: xxxx., name: New York}
-// weather: {description: "clear sky". icon: "01d", id: xxx, main: }
-// wind: {deg: xxx, gust: xx.xx, speed: xx.xx}
+function searchCity(cityName) {
+    const geoApi = `https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=5&appid=${apiKey}`;
+
+    fetch(geoApi)
+        .then(response => response.json())
+        .then(data => {
+            if (data.length > 0) {
+                var lat = data[0].lat;
+                var lon = data[0].lon;
+                getFiveDayWeather(lat, lon);
+                currentWeather(lat, lon);
+            } else {
+                console.log('No data found for the specified city.');
+            }
+        })
+        .catch(error => {
+            console.log("There was an error when getting weather data:", error);
+        });
+}
