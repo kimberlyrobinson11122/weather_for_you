@@ -3,18 +3,16 @@
 #### [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) 
 
 ## Deployed Application
-[Deployed Code (click here)]
 
-Example of Deployed link: https://github.com/kimberlyrobinson11122/Kimberly-Robinson-Portfolio/deployments
+Deployed link: https://github.com/kimberlyrobinson11122/Kimberly-Robinson-Portfolio/deployments
 
-Example of link for Repo for Readme: (https://kimberlyrobinson11122.github.io/REPO-NAME)
+GitHub Repo: (https://github.com/kimberlyrobinson11122/weather_for_you)
 
 ## Images
 
 Screenshot of the first build:
 
-placeholder ![screen shot of initial build](./assets/)
-A sized image: ![Alt](img.jpg =60x50)
+![screen shot of initial build](./assets/images/Weather%20App%20Page.jpg)
 
 ## Table of Contents
 
